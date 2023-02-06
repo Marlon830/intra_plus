@@ -1,0 +1,22 @@
+{
+ "manifest_version": 3,
+ "name": "Intra+",
+ "version": "1.0",
+ "description": "You'll always be subscribed",
+ "permissions": ["storage", "activeTab"],
+ "content_scripts" : [
+    {
+        "matches": ["https://intra.epitech.eu/"],
+        "css": [],
+        "js": ["content.js"]
+    }
+ ],
+ "icons": {
+    "16": "img/epitechlogo.png",
+    "128": "img/epitechlogo.png"
+ },
+ "action": {
+    "default_title": "Click",
+    "default_popup": "popup.html"
+ }
+}
