@@ -1,3 +1,7 @@
+// mettre les modules dans la struct en faisant une variable globale et en var++ à chaque début de .then
+
+var l = 0;
+
 function makeStruct(keys) {
     if (!keys) return null;
     const k = keys.split(', ');
@@ -52,7 +56,13 @@ function timeoutFunction() {
             allDate = [];
             isRegistered = [];
             tempArr = [];
-            console.log(allObjects);
+            l++;
+            if (l == allHref.length) {
+                console.log(allObjects);
+                chrome.runtime.sendMessage({greeting: allObjects}, function(response) {
+                    console.log(response.farewell);
+                });
+            }
         }).catch(function (err) {
             console.warn('Something went wrong.', err);
         });
@@ -60,19 +70,3 @@ function timeoutFunction() {
 }
 
 setTimeout(timeoutFunction, 5000);
-
-//console.log(allModule[0].innerText);
-// for (var i = 0; i < text.length; i++) {
-//     console.log(text[i]);
-// }
-
-// document.body.style.backgroundColor = 'white';
-// console.log("CONTENT");
-
-// if (text[i].innerText[0] == 'B' && text[i].innerText[1] == '2') {
-//     console.log(text[i].innerText);
-// }
-
-// chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-//     console.log(response.farewell);
-// });
