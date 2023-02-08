@@ -14,7 +14,7 @@ function makeStruct(keys) {
   }
   
 
-const activite = new makeStruct("type, dateStart, isSubscribed");
+const activite = new makeStruct("type, dateStart, isSubscribed, name");
 
 function kick_off() {
     return;
@@ -27,6 +27,7 @@ function timeoutFunction() {
     var tempArr = [];
     var allCateg = [];
     var allHref = [];
+    var allName = [];
     var allModule = document.getElementsByTagName("dd");
     var allDt = allModule[0].getElementsByClassName("module ongoing current");
 
@@ -45,17 +46,20 @@ function timeoutFunction() {
 
             for (var i = 0; i != allActivite.length; i++) {
                 var categ = allActivite[i].getElementsByClassName("categ");
+                var name = allActivite[i].getElementsByClassName("acti-title").item(0).getElementsByTagName("a");
                 allCateg.push(categ[0].innerHTML);
+                allName.push(name[0].innerHTML);
                 var dateStart = allActivite[i].getElementsByClassName("item date");
                 tempArr.push(dateStart[0].getElementsByTagName("span")); 
                 allDate.push(tempArr[i][1].innerHTML);
                 isRegistered.push(allActivite[i].classList.contains("student-registered"));
-                allObjects.push(new activite(allCateg[i], allDate[i], isRegistered[i]));
+                allObjects.push(new activite(allCateg[i], allDate[i], isRegistered[i], allName[i]));
             }
             allCateg = [];
             allDate = [];
             isRegistered = [];
             tempArr = [];
+            allName = [];
             l++;
             if (l == allHref.length) {
                 console.log(allObjects);
