@@ -63,8 +63,8 @@ function timeoutFunction() {
             l++;
             if (l == allHref.length) {
                 console.log(allObjects);
-                chrome.runtime.sendMessage({greeting: allObjects}, function(response) {
-                    console.log(response.farewell);
+                chrome.storage.local.set({key: allObjects}, function() {
+                    console.log('Value is set to ' + allObjects);
                 });
             }
         }).catch(function (err) {
