@@ -2,23 +2,34 @@ var nb_of_kick_off = 0;
 var nb_of_bootstrap = 0;
 var nb_of_project = 0;
 
-function canRegister(dateStart) {
+function convertDateFrToEn(date) {
     var i = 0;
     var temp = "";
+    var temp2 = "";
+    var temp3 = "";
+    var real_date = "";
+    while (date[i] != '/') {
+        temp = temp + date[i];
+        i++;
+    }
+    i++;
+    while (date[i] != '/') {
+        temp2 = temp2 + date[i];
+        i++;
+    }
+    i++;
+    while (i != date.length) {
+        temp3 = temp3 + date[i];
+        i++;
+    }
+    real_date = temp2 + '/' + temp + '/' + temp3;
+    return real_date;
+}
+
+function canRegister(dateStart) {
     var today = new Date();
-    var date = new Date(dateStart).toLocaleDateString("fr");
-    while (i != dateStart.length) {
-        if (dateStart[i] == ',') {
-            break;
-        }
-        i++;
-    }
-    while (i != dateStart.length) {
-        temp = temp + dateStart[i];
-        i++;
-    }
-    var real_date = new Date(date + temp);
-    if (real_date <= today) {
+    var date = new Date(dateStart);
+    if (date <= today) {
         return true;
     }
     return false;
@@ -33,21 +44,17 @@ document.addEventListener("DOMContentLoaded", function(){
         }
         for (var i = 0; i != allObjects.length; i++) {
             if (allObjects[i].isSubscribed == false) {
-                if (allObjects[i].type.includes("Kick-off")) {
+                if (allObjects[i].type.includes("Kick-off") || allObjects[i].type.includes("Bootstrap")) {
                     nb_of_kick_off++;
-                    var par = document.createElement("p");
-                    var text = document.createTextNode(allObjects[i].name + ", you can register it until " + allObjects[i].dateStart);
-                    par.appendChild(text);
-                    document.body.appendChild(par);
-                }
-                if (allObjects[i].type.includes("Bootstrap")) {
                     nb_of_bootstrap++;
+                    var d = new Date(convertDateFrToEn(allObjects[i].dateStart));
+                    d.setDate(d.getDate()-1);
                     var par = document.createElement("p");
-                    var text = document.createTextNode(allObjects[i].name + ", you can register it until " + allObjects[i].dateStart);
+                    var text = document.createTextNode(allObjects[i].name + ", you can register it until " + d.toLocaleString("fr"));
                     par.appendChild(text);
                     document.body.appendChild(par);
                 }
-                if ((allObjects[i].type.includes("Project") || allObjects[i].type.includes("Mini-project")) && canRegister(allObjects[i].dateStart)) {
+                if ((allObjects[i].type.includes("Project") || allObjects[i].type.includes("Mini-project")) && canRegister(convertDateFrToEn(allObjects[i].dateStart))) {
                     nb_of_project++;
                     var par = document.createElement("p");
                     var text = document.createTextNode(allObjects[i].name + ", you can register it since " + allObjects[i].dateStart);
