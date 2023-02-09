@@ -9,6 +9,10 @@
         "matches": ["https://intra.epitech.eu/module/*"],
         "css": [],
         "js": ["content.js"]
+    },
+    {
+      "matches": ["https://intra.epitech.eu/planning/*"],
+      "js": ["edt/edt.js"]
     }
  ],
  "icons": {
