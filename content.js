@@ -73,4 +73,4 @@ function timeoutFunction() {
     }
 }
 
-setTimeout(timeoutFunction, 5000);
+setTimeout(timeoutFunction, 3000);
