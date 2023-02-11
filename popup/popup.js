@@ -35,6 +35,14 @@ function canRegister(dateStart) {
     return false;
 }
 
+function addElemToDoc(tag, str)
+{
+    var par = document.createElement(tag);
+    var text = document.createTextNode(str);
+    par.appendChild(text);
+    document.body.appendChild(par);
+}
+
 document.addEventListener("DOMContentLoaded", function(){
     chrome.storage.local.get(['key'], function(result) {
         console.log('Value currently is ' + result.key);
@@ -49,25 +57,16 @@ document.addEventListener("DOMContentLoaded", function(){
                     nb_of_bootstrap++;
                     var d = new Date(convertDateFrToEn(allObjects[i].dateStart));
                     d.setDate(d.getDate()-1);
-                    var par = document.createElement("p");
-                    var text = document.createTextNode(allObjects[i].name + ", you can register it until " + d.toLocaleString("fr"));
-                    par.appendChild(text);
-                    document.body.appendChild(par);
+                    addElemToDoc("p", allObjects[i].name + ", you can register it until " + d.toLocaleString("fr"));
                 }
                 if ((allObjects[i].type.includes("Project") || allObjects[i].type.includes("Mini-project")) && canRegister(convertDateFrToEn(allObjects[i].dateStart))) {
                     nb_of_project++;
-                    var par = document.createElement("p");
-                    var text = document.createTextNode(allObjects[i].name + ", you can register it since " + allObjects[i].dateStart);
-                    par.appendChild(text);
-                    document.body.appendChild(par);
+                    addElemToDoc("p", allObjects[i].name + ", you can register it since " + allObjects[i].dateStart);
                 }
             }
         }
         if (nb_of_kick_off == 0 && nb_of_bootstrap == 0 && nb_of_project == 0) {
-            var par = document.createElement("h2");
-            var text = document.createTextNode("You are registered to everything you can!");
-            par.appendChild(text);
-            document.body.appendChild(par);
+            addElemToDoc("h2", "You are registered to everything you can!");
         }
     });
 });
